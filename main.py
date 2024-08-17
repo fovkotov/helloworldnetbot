@@ -1,5 +1,6 @@
 import requests
 import time
+from random import choice
 
 
 API_URL = 'https://api.telegram.org/bot'
@@ -23,42 +24,51 @@ params = {
 
 offset = -2
 counter = 0
-while counter < 10000:
-    print('attempt =', counter)
 
+def get_random_cleaner_vacancy():
     try:
-        updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset + 1}').json()
+        response = requests.get(HH_API_URL, params={
+            'text': 'уборщик',
+            'per_page': 100,  # Запрашиваем до 100 вакансий
+            'page': 0
+        })
+        response.raise_for_status()
+        data = response.json()
+        vacancies = data.get('items', [])
+        if vacancies:
+            # Выбираем случайную вакансию
+            import random
+            vacancy = random.choice(vacancies)
+            return vacancy.get('alternate_url', 'Нет ссылки на вакансию')
+        else:
+            return 'Вакансий не найдено'
     except requests.exceptions.RequestException as e:
-        print(f"Request to Telegram API failed: {e}")
-        continue
+        print(f"Ошибка при запросе вакансий: {e}")
+        return ERROR_TEXT
 
-    if 'result' in updates and updates['result']:
-        for result in updates['result']:
-            offset = result['update_id']
-            chat_id = result['message']['from']['id']
+while counter < 100000:
+    print('attempt =', counter)
+    try:
+        updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset}').json()
+        print("Response from Telegram API:", updates)
 
-            try:
-                hh_response = requests.get(HH_API_URL, params=params)
-                hh_data = hh_response.json()
-                if hh_data['items']:
-                    vacancy_link = hh_data['items'][0]['alternate_url']
-                    response_text = f'Вот ссылка на вакансию уборщика: {vacancy_link}'
-                else:
-                    response_text = ERROR_TEXT
-            except requests.exceptions.RequestException as e:
-                print(f"Request to HH API failed: {e}")
-                response_text = ERROR_TEXT
+        if updates.get('ok') and updates.get('result'):
+            for result in updates['result']:
+                offset = result['update_id'] + 1
+                chat_id = result['message']['chat']['id']
 
-            try:
-                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage', params={
-                    'chat_id': chat_id,
-                    'text': response_text
-                })
-            except requests.exceptions.RequestException as e:
-                print(f"Failed to send message: {e}")
+                # Получаем случайную вакансию уборщика
+                vacancy_link = get_random_cleaner_vacancy()
+
+                # Отправляем ссылку на вакансию
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={vacancy_link}')
+
+    except requests.exceptions.RequestException as e:
+        print(f"Ошибка при запросе к Telegram API: {e}")
 
     time.sleep(1)
     counter += 1
+
 
 # from aiogram import Bot, Dispatcher, F
 # from aiogram.filters import CommandStart
