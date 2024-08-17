@@ -57,10 +57,8 @@ while counter < 100000:
                 offset = result['update_id'] + 1
                 chat_id = result['message']['chat']['id']
 
-                # Получаем случайную вакансию уборщика
                 vacancy_link = get_random_cleaner_vacancy()
 
-                # Отправляем ссылку на вакансию
                 requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={vacancy_link}')
 
     except requests.exceptions.RequestException as e:
