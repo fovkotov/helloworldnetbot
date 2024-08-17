@@ -5,7 +5,7 @@ from random import choice
 
 API_URL = 'https://api.telegram.org/bot'
 API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
-BOT_TOKEN = '7494082033:AAEdHplvBELVIwA8fsbuppf7ZSx1Y50lvxs'
+BOT_TOKEN = '7533832481:AAF-al04aUVQHfVzbIE-Ro5M7Iw2qtkGgaA'
 ERROR_TEXT = 'Здесь должна была быть картинка с котиком :('
 HH_API_URL = 'https://api.hh.ru/vacancies'
 
