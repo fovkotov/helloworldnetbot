@@ -66,7 +66,7 @@ while counter < 100000:
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при запросе к Telegram API: {e}")
 
-    time.sleep(1)
+    # time.sleep(1)
     counter += 1
 
 
