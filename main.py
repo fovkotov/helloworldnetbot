@@ -8,6 +8,12 @@ BOT_TOKEN = '7533832481:AAF-al04aUVQHfVzbIE-Ro5M7Iw2qtkGgaA'
 ERROR_TEXT = 'Здесь должна была быть картинка с котиком :('
 HH_API_URL = 'https://api.hh.ru/vacancies'
 
+from config import Config, load_config
+
+config: Config = load_config()
+BOT_TOKEN: str = config.tg_bot.token
+
+
 params = {
     'text': 'уборщик',
     'area': '1',

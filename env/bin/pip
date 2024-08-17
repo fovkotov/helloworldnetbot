@@ -1,4 +1,6 @@
-#!/Users/hanna/Desktop/тг-боты-codje/codje_bot/env/bin/python3.12
+#!/bin/sh
+'''exec' "/Users/andrejbreadhead/MOUSE ПРИКОЛЫ/VS_CODE/TelegramBot/helloworldnetbot/env/bin/python3.12" "$0" "$@"
+' '''
 # -*- coding: utf-8 -*-
 import re
 import sys
