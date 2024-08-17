@@ -5,7 +5,7 @@ from random import choice
 
 API_URL = 'https://api.telegram.org/bot'
 API_CATS_URL = 'https://api.thecatapi.com/v1/images/search'
-BOT_TOKEN = '7533832481:AAF-al04aUVQHfVzbIE-Ro5M7Iw2qtkGgaA'
+BOT_TOKEN = '7494082033:AAEdHplvBELVIwA8fsbuppf7ZSx1Y50lvxs'
 ERROR_TEXT = 'Здесь должна была быть картинка с котиком :('
 HH_API_URL = 'https://api.hh.ru/vacancies'
 
@@ -57,14 +57,16 @@ while counter < 100000:
                 offset = result['update_id'] + 1
                 chat_id = result['message']['chat']['id']
 
+                # Получаем случайную вакансию уборщика
                 vacancy_link = get_random_cleaner_vacancy()
 
+                # Отправляем ссылку на вакансию
                 requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text={vacancy_link}')
 
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при запросе к Telegram API: {e}")
 
-    # time.sleep(1)
+    time.sleep(1)
     counter += 1
 
 
