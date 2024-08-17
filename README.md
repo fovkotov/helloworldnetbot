@@ -1,1 +1,1 @@
-cod.je_bot
+helloworldnetbot
