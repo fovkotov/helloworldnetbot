@@ -23,7 +23,7 @@ params = {
 }
 
 offset = -2
-counter = 0
+# counter = 0
 
 def get_random_cleaner_vacancy():
     try:
@@ -46,28 +46,28 @@ def get_random_cleaner_vacancy():
         print(f"Ошибка при запросе вакансий: {e}")
         return ERROR_TEXT
 
-while counter < 100000:
-    print('attempt =', counter)
-    try:
-        updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset}').json()
-        print("Response from Telegram API:", updates)
+# while counter < 100000:
+#     print('attempt =', counter)
+try:
+    updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset}').json()
+    print("Response from Telegram API:", updates)
 
-        if updates.get('ok') and updates.get('result'):
-            for result in updates['result']:
-                offset = result['update_id'] + 1
-                chat_id = result['message']['chat']['id']
+    if updates.get('ok') and updates.get('result'):
+        for result in updates['result']:
+            offset = result['update_id'] + 1
+            chat_id = result['message']['chat']['id']
 
-                # Получаем случайную вакансию уборщика
-                vacancy_link = get_random_cleaner_vacancy()
+            # Получаем случайную вакансию уборщика
+            vacancy_link = get_random_cleaner_vacancy()
 
-                # Отправляем ссылку на вакансию
-                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=Вот вакансия уборьщика: {vacancy_link}')
+            # Отправляем ссылку на вакансию
+            requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=Вот вакансия уборьщика: {vacancy_link}')
 
-    except requests.exceptions.RequestException as e:
-        print(f"Ошибка при запросе к Telegram API: {e}")
+except requests.exceptions.RequestException as e:
+    print(f"Ошибка при запросе к Telegram API: {e}")
 
-    time.sleep(1)
-    counter += 1
+time.sleep(1)
+    # counter += 1
 
 # commit
 # from aiogram import Bot, Dispatcher, F
