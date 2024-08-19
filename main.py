@@ -61,7 +61,7 @@ while counter < 100000:
                 vacancy_link = get_random_cleaner_vacancy()
 
                 # Отправляем ссылку на вакансию
-                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=Вот вакансия уборьщика: {vacancy_link}')
+                requests.get(f'{API_URL}{BOT_TOKEN}/sendMessage?chat_id={chat_id}&text=Вот вакансия уборщика: {vacancy_link}')
 
     except requests.exceptions.RequestException as e:
         print(f"Ошибка при запросе к Telegram API: {e}")
