@@ -46,7 +46,7 @@ def get_random_cleaner_vacancy():
         print(f"Ошибка при запросе вакансий: {e}")
         return ERROR_TEXT
 
-while counter < 100000:
+while counter < 90000000000000000000000000000000000:
     print('attempt =', counter)
     try:
         updates = requests.get(f'{API_URL}{BOT_TOKEN}/getUpdates?offset={offset}').json()
